@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import axios from 'axios';
-import { ref, onMounted } from 'vue'
+import axios from "axios";
+import { ref, onMounted } from "vue";
 import names from "../names";
 
 const avatarEndpoint = "https://avatars.dicebear.com/v2/avataaars/";
@@ -8,24 +8,23 @@ const apiOptions = "options[mood][]=happy";
 
 const backendUrl = "http://localhost:8000";
 const beneficiariesEndpoint = `${backendUrl}/api/beneficiaries`;
-const loginEndpoint = `${backendUrl}/login`;
+const loginEndpoint = `${backendUrl}/api/login`;
 
 function getAvatar(name) {
-  return`${avatarEndpoint}${name}.svg?${apiOptions}`;
+  return `${avatarEndpoint}${name}.svg?${apiOptions}`;
 }
 
-const beneficiaries = ref(null)
-  
-onMounted(async() => {
+const beneficiaries = ref(null);
+
+onMounted(async () => {
   const response = await axios.get(beneficiariesEndpoint);
   beneficiaries.value = response.data;
   console.log(beneficiaries);
-})
+});
 
 const beneficiaryNames = [...Array(10).keys()].map(number => ({
-  name: names[Math.floor(Math.random() * names.length)]
+  name: names[Math.floor(Math.random() * names.length)],
 }));
-
 </script>
 
 }
@@ -33,20 +32,28 @@ const beneficiaryNames = [...Array(10).keys()].map(number => ({
   <div class="App">
     <header class="App-header">
       <h1>Gestionnaire de bénéficaires Reconnect</h1>
-      <hr/>
+      <hr />
       <h3>Non stockés</h3>
       <div class="Beneficiaries-list">
-          <div v-for="beneficiary in beneficiaryNames" :key="beneficiary.id"  class="Beneficiary-card">
-              <img :src="getAvatar(beneficiary.name)"/>
-              <span>{{ beneficiary.name }}</span>
-          </div>
+        <div
+          v-for="beneficiary in beneficiaryNames"
+          :key="beneficiary.id"
+          class="Beneficiary-card"
+        >
+          <img :src="getAvatar(beneficiary.name)" />
+          <span>{{ beneficiary.name }}</span>
+        </div>
       </div>
-      <hr/>
+      <hr />
       <h3>En base de donnés</h3>
       <div class="Beneficiaries-list">
-        <div v-for="beneficiary in beneficiaries" :key="beneficiary.id" class="Beneficiary-card">
-            <img :src="getAvatar(beneficiary.name)"/>
-            <span>{{ beneficiary.name }}</span>
+        <div
+          v-for="beneficiary in beneficiaries"
+          :key="beneficiary.id"
+          class="Beneficiary-card"
+        >
+          <img :src="getAvatar(beneficiary.name)" />
+          <span>{{ beneficiary.name }}</span>
         </div>
       </div>
     </header>
@@ -74,6 +81,7 @@ const beneficiaryNames = [...Array(10).keys()].map(number => ({
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
 .App {
   text-align: center;
 }

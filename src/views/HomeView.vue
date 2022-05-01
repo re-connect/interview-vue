@@ -2,13 +2,14 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import names from "../names";
+import authHeader from '../auth-header.js'
+import router from "@/router";
 
 const avatarEndpoint = "https://avatars.dicebear.com/v2/avataaars/";
 const apiOptions = "options[mood][]=happy";
 
 const backendUrl = "http://localhost:8000";
-const beneficiariesEndpoint = `${backendUrl}/api/beneficiaries`;
-const loginEndpoint = `${backendUrl}/api/login`;
+const beneficiariesEndpoint = `${backendUrl}/api/beneficiaries.json`;
 
 function getAvatar(name) {
   return `${avatarEndpoint}${name}.svg?${apiOptions}`;
@@ -17,9 +18,11 @@ function getAvatar(name) {
 const beneficiaries = ref(null);
 
 onMounted(async () => {
-  const response = await axios.get(beneficiariesEndpoint);
+  const response = await axios.get(beneficiariesEndpoint, {
+    headers: authHeader(),
+  });
   beneficiaries.value = response.data;
-  console.log(beneficiaries);
+  console.log(beneficiaries.value);
 });
 
 const beneficiaryNames = [...Array(10).keys()].map(number => ({

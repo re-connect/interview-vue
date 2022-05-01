@@ -34,6 +34,7 @@
 
 <script>
 import axios from "axios";
+import router from "./../router";
 
 const backendUrl = "http://localhost:8000";
 const loginEndpoint = `${backendUrl}/api/login`;
@@ -58,7 +59,8 @@ export default {
       axios
         .post(loginEndpoint, json)
         .then((response) => {
-          console.log(response.data);
+          localStorage.setItem("user", JSON.stringify(response.data));
+          router.push({ path: "/" });
         })
         .catch((error) => {
           console.log(error.response);

@@ -21,7 +21,7 @@ export default {
           (res) => {
             localStorage.token = res.data.token;
             console.log(localStorage.token);
-            //this.$router.push("/");
+            this.$router.push("/profile");
           },
           (err) => {
             if (err.response.status === 401) {

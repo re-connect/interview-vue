@@ -72,7 +72,7 @@ const beneficiaryNames = [...Array(10).keys()].map(number => ({
   flex-direction: column;
   align-items: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: gray;
 }
 .App {
   text-align: center;
